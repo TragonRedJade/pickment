@@ -59,7 +59,8 @@ angular.module('pickment', [])
     return {
       restrict: 'E',
       scope: {
-        color: "=ngModel"
+        color: "=ngModel",
+        callback: "=ngChange"
       },
       replace: true,
       template: '<div class="pickment" style="background-color: {{color}};" tabindex="0"></div>',
@@ -78,6 +79,9 @@ angular.module('pickment', [])
         $scope.$on('pickment.pickcolor', function(event, color) {
           $scope.$apply(function() {
             $scope.color = color;
+            if(_.isFunction($scope.callback)){
+              $scope.callback()
+            }
           });
         })
       }
